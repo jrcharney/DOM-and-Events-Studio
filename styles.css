@@ -1,6 +1,176 @@
-#shuttleBackground {
+/* @file styles.css
+ * Some notes about this repo:
+ *  1. There is WAY too much use of the style attribute in HTML.
+ *  2. There is WAY too much use of "text-align: center"
+ *  3. There is WAY too much "display: inline-block" being used on block elements.
+ *  4. Semantic elements are just div elements with different names. Use them anyway.
+ *  5. Missed opportunity to teach Responsive Web Design (RWD).
+ * I don't care what this exercise says, you need these changes!
+*/
+/* Let's use some variables! */
+:root {
+    /* The "fence" is the background (#shuttleBackground) */
+    /* The "sprite" is the character (#rocket) */
+    --fence_size: 400px;
+    --sprite_size: 75px;
+    --fence_center: calc(var(--fence_size)/2);
+    --sprite_center: calc(var(--sprite_size)/2);
+    --fence_width: var(--fence_size);
+    --fence_height: var(--fence_size);
+    --sprite_width: var(--sprite_size);
+    --sprite_height: var(--sprite_size);
+    --fence_cx: var(--fence_center);
+    --fence_cy: var(--fence_center);
+    --sprite_cx: var(--sprite_center);
+    --sprite_cy: var(--sprite_center);
+    /* We need to adjust the offset of the sprite to be center with the fence. */
+    --sprite_left: calc(var(--fence_cx) - var(--sprite_cx));
+    --sprite_top: calc(var(--fence_height) - var(--sprite_height)); /* Moved it down to make it look like it was on the ground */
+    /* calc(var(--fence_cy) - var(--sprite_cy)); */
+}
+
+/* TODO: keyframe animations! Actually, a transition will work! (I used that instead. The results are wonderful!) */
+/* TODO: RWD for the main section. */
+
+/* For some reason, this is done so that if we use gradient background in the body, it won't band. */
+html {
+    height: 100%;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+header, main, footer {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Add a little shadow to our headers */
+header h1,
+header h2,
+main h1,
+main h2 {
+    text-shadow: 4px 4px 5px #999;
+}
+
+/* Main should be a flex box */
+main {
+    display: flex;
+    flex-direction: row;
+    /* TODO: How do we stretch main the length of the screen? */
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* increased the margin so that the box-shadow wouldn't overlap */
+    margin-top: 2px;
+    margin-bottom: 2px;
+    /* increased the padding to make the buttons look better. */
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#left_col,
+#right_col {
+    flex-shrink: 1;
+    max-width: 200px;
+}
+
+#center_col {
+    flex-grow: 2;
+    /* border: 1px solid #999; */
+    /* text-align: center; */ /* This won't do anything! */
+    display: flex;
+    justify-content: center; /* this will! */
+}
+
+.column {
+    /*background-color: #ccc;*/
+}
+.module {
+    border: 1px solid #999;
+    padding: 2px;
+    border-radius: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
+    box-shadow: 2px 2px 5px #999;
+}
+
+.module h3 {
+    margin-top: 2px; /* reduce that gap at the top of the box */
+    text-shadow: 4px 4px 5px #999;
+}
+
+/*
+.module h3 + p {
+    border: 1px solid #999;
+}
+*/
+
+.column .module {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+#actions {
+    width: 400px;
+}
+
+header .module {
+    width: 400px;
+    /* This is how you center a box! */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#chat p {
+    text-align: left;
+    font-size: 10pt; /* smaller font */
+}
+
+.center {
+    text-align: center;
+}
+
+button {
+    cursor: pointer;
+    user-select: none;
+}
+
+#dpad button {
+    /* make our buttons square */
+    width: 30px;
+    height: 30px;
+    /* quick and dirty use of margin to space the left and right buttons */
+    margin-left: 15px;
+    margin-right: 15px;
+    /* font-weight: bold; */ /* doesn't appear to have an effect*/
+}
+
+#shuttleBackground {    /* The fence */
+    position: relative;              /* State your position here, not in HTML! */
     background-color: green;
-    display: inline-block;
-    height: 80%;
-    width: 40%;
+    /* display: inline-block; */    /* Don't use inline-block! */
+    width: var(--fence_width);
+    height: var(--fence_height);
+    /* height: 80%;
+    width: 40%; */  /* DON'T use percentages! */
+    margin: 4px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px #999;
+    transition: background-color ease 0.5s; /* Considering the success of transition with rocket, let's do it here too! */
+}
+
+/* Rocket should be treated like a sprite (video game character) in a video game. */
+#rocket {       /* The sprite */
+    position: absolute;
+    left: var(--sprite_left);
+    top:  var(--sprite_top);
+    width: var(--sprite_width);
+    height: var(--sprite_height);
+    transition: top ease 0.5s, left ease 0.5s; /* Make our rocket glide when moved! */
 }

@@ -1,40 +1,71 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
         <title>Flight Simulator</title>
-        <link rel = "stylesheet" type = "text/css" href = "styles.css" />
-        <script src = "scripts.js"></script>
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+        <script src="scripts.js"></script>
     </head>
     <body>
-        <div style="text-align: center;">
+        <!-- TODO: What if centering text is pointless? -->
+        <!-- NOTE: Changed this div to a header -->
+        <header class="center">
             <h1>Flight Simulator</h1>
-            <h2>Current Flight Status</h2>
-            <p id = "flightStatus">Space shuttle ready for takeoff</p>
+            <!-- TODO: This should probably go in main. -->
+            <div class="module">
+                <h2>Current Flight Status</h2>
+                <p id="flightStatus">Space shuttle ready for takeoff</p>
+            </div>
+            <!-- This too. -->
             <h2>Shuttle Trajectory</h2>
-        </div>
-        <div style="text-align: center; height: 400px; width: 100%;" >
-            <div style="text-align: center; display: inline-block;">
-                <h3>Fuel Levels</h3>
-                <p>Tank Full</p>
-                <h3>Astronaut Chat</h3>
-                <p>Houston, we are ready when you are!</p>
+        </header>
+        <!-- NOTE: Changed this div to main -->
+        <!-- NOTE: It appears we can't remove the style here...yet. -->
+        <!-- Removed style="height: 400px; width: 100%;" -->
+        <main class="center">
+            <!-- NOTE: Added more divs. Better organized -->
+            <!-- Removed style="text-align: center; display: inline-block;" from left_col -->
+            <div id="left_col" class="column">
+                <div id="fuel" class="module">
+                    <h3>Fuel Levels</h3>
+                    <p>Tank Full</p>
+                </div>
+                <div id="chat" class="module">
+                    <h3>Astronaut Chat</h3>
+                    <p>Houston, we are ready when you are!</p>
+                </div>
             </div>
-            <div id = "shuttleBackground" style = "position: relative;">
-                <img src = "LaunchCode_rocketline_white.png" height = "75" width = "75" id = "rocket"/>
+            <div id="center_col">
+                <!--  Removed style="position: relative;". It's in the stylesheet now.-->
+                <div id="shuttleBackground">
+                    <img src="LaunchCode_rocketline_white.png" height="75" width="75" id ="rocket"/>
+                </div>
             </div>
-            <div style = "text-align: center; display: inline-block;">
-                    <button>Up</button>
-                    <button>Down</button>
-                    <button>Right</button>
-                    <button>Left</button>
+            <div id="right_col" class="column">
+                <!-- Removed style="text-align: center; display: inline-block;" -->
+                <div id="dpad" class="module">
+                    <!-- NOTE: Had to add IDs to these buttons. Ether that or use a convoluted querySelector -->
+                    <button id="move_up" title="Up" disabled>&uarr;</button><br>
+                    <button id="move_left" title="Left" disabled>&larr;</button>
+                    <button id="move_right" title="Right" disabled>&rarr;</button><br>
+                    <button id="move_down" title="Down" disabled>&darr;</button>
+                </div>
+                <div id="altitude" class="module">
                     <h3>Space Shuttle Height</h3>
-                    <p id='spaceShuttleHeight'>0</p><p style = "display: inline-block;"> miles</p>
+                    <!-- Replaced ps with inline elements -->
+                    <!-- put it in a p anyway because of how nice the spacing is. -->
+                    <p><label><output id="spaceShuttleHeight">0</output> miles</label></p>
+                </div>
             </div>
-        </div>
-        <div style="text-align: center;">
-            <button id = "takeoff">Take off</button>
-            <button id = "landing">Land</button>
-            <button id = "missionAbort">Abort Mission</button>
-    </div>
+        </main>
+        <!-- NOTE: changed this to a footer -->
+        <footer class="center">
+            <!-- NOTE: Moved the buttons to a module in the footer. (Should be in main after our field, honestly) -->
+            <div id="actions" class="module">
+                <button id="takeoff">Take off</button>
+                <button id="landing">Land</button>
+                <button id="missionAbort">Abort Mission</button>
+            </div>
+        </footer>
     </body>
 </html>

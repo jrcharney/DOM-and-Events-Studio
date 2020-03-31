@@ -56,8 +56,8 @@ window.addEventListener('load',() => {
 
     //dpadState(false); // Actually I set these to disabled
 
-    // 2. When the "Take off" button is clicked:
-    document.getElementById("takeoff").addEventListener("click",() => {
+    // Moved these to function
+    function takeOff(){
         // a. A `window.confirm` should let the user know...
         // TODO: Let's see if this will work as a test. (Yeah, even though we could assign it to a boolean.)
         if(window.confirm("Confirm that the shuttle is ready for takeoff?")){
@@ -72,10 +72,8 @@ window.addEventListener('load',() => {
 
             getRocketPosition();
         };
-    });
-
-    // 3. When the "Land" button is clicked:
-    document.getElementById('landing').addEventListener("click",() => {
+    }
+    function landShip(){
         // a. A `window.alert` should let ht user know...
         window.alert("The shuttle is landing. Landing gear engaged.");
         status.innerHTML = "The shuttle is landing. Landing gear engaged.";
@@ -88,10 +86,8 @@ window.addEventListener('load',() => {
         rocket.style.setProperty("left",`${sprite_default.x}px`);
         rocket.style.setProperty("top",`${sprite_default.y}px`);
         //getRocketPosition();
-    });
-
-    // 4. When "Abort Mission" is clicked:
-    document.getElementById('missionAbort').addEventListener("click", () => {
+    }
+    function abortMission(){
         // a. When the "Abort Mission" button is clicked...
         if(window.confirm("Confirm that you want to abort the mission?")){
             status.innerHTML = "Mission aborted.";
@@ -105,7 +101,16 @@ window.addEventListener('load',() => {
             rocket.style.setProperty("top",`${sprite_default.y}px`);
             //getRocketPosition();
         };
-    });
+    }
+
+    // 2. When the "Take off" button is clicked:
+    document.getElementById("takeoff").addEventListener("click",takeOff);
+
+    // 3. When the "Land" button is clicked:
+    document.getElementById('landing').addEventListener("click",landShip);
+
+    // 4. When "Abort Mission" is clicked:
+    document.getElementById('missionAbort').addEventListener("click", abortMission);
 
     // 5. When "Up", "Down", "Right", and "Left" buttons are clicked:
     // TODO: Add keyboard events!
@@ -115,21 +120,23 @@ window.addEventListener('load',() => {
     // NOTE: Left before Right, because I'm so used to that.
     // BONUS: Don't let the shuttle leave the parent element.
 
-    document.getElementById("move_left").addEventListener("click", () => {
+    function moveLeft(){
         let x = getEPV(rocket,"left") - 10;
         //console.log(x);
         if(x >= fence.left){
             rocket.style.setProperty("left",`${x}px`);
-        }    
-    });
-    document.getElementById("move_right").addEventListener("click", () => {
+        }
+    }
+
+    function moveRight(){
         let x = getEPV(rocket,"left") + 10;
         //console.log(x);
         if(x <= fence.right){
             rocket.style.setProperty("left",`${x}px`);
         }
-    });
-    document.getElementById("move_up").addEventListener("click", () => {
+    }
+
+    function moveUp(){
         altitude.innerHTML = parseInt(altitude.innerHTML) + 10000;
         // subtract 10 because the origin is in the top left!
         let y = getEPV(rocket,"top") - 10;
@@ -137,8 +144,9 @@ window.addEventListener('load',() => {
         if(y >= fence.top){
             rocket.style.setProperty("top",`${y}px`);
         }
-    });
-    document.getElementById("move_down").addEventListener("click", () => {
+    }
+
+    function moveDown(){
         let alt = parseInt(altitude.innerHTML);
         if( alt > 0){
             altitude.innerHTML = alt - 10000;
@@ -149,5 +157,43 @@ window.addEventListener('load',() => {
         if(y <= fence.bottom){
             rocket.style.setProperty("top",`${y}px`);
         }
+    }
+
+    document.getElementById("move_left").addEventListener("click", moveLeft);
+    document.getElementById("move_right").addEventListener("click", moveRight);
+    document.getElementById("move_up").addEventListener("click", moveUp);
+    document.getElementById("move_down").addEventListener("click", moveDown);
+
+    // This part could work, but I'll deal with it later.
+    // TODO: Enable this on focus
+    // TODO: Don't let keys be held down.
+    /*
+    document.addEventListener("keydown", (event) => {
+        console.log(event.which);
+        switch(event.which){
+            case 13:    // Enter
+                takeOff();
+                break;
+            case 27:    // ESC (abort!)
+                abortMission();
+                break;
+            case 32:    // Space
+                landShip();
+                break;
+            case 37:    // left arrow
+                moveLeft();
+                break;
+            case 38:    // up arrow
+                moveUp();
+                break;
+            case 39:    // right arrow
+                moveRight();
+                break;
+            case 40:    // down arrow
+                moveDown();
+                break;
+            default: break; // do nothing with other keys
+        }
     });
+    */
 });

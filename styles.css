@@ -42,7 +42,7 @@ body {
 }
 
 header, main, footer {
-    max-width: 90%;
+    max-width: 70%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -82,7 +82,7 @@ footer {
 
 #center_col {
     flex-grow: 2;
-    /* border: 1px solid #999; */
+    border: 1px solid #999;
     /* text-align: center; */ /* This won't do anything! */
     display: flex;
     justify-content: center; /* this will! */
